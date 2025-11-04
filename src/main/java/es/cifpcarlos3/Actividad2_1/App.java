@@ -37,14 +37,27 @@ public class App {
                         System.out.println("Saliendo...");
                         break;
                 }
+
             }while (opcion != 5);
+
         } catch (SQLException e) {
             System.err.println("Error de conexión: " + e.getMessage());
         }
     }
 
     private static void listarPaisesSinCapital() {
-        String sql = "SELECT * FROM paises";
+        String sql = "SELECT nombre_pais FROM t_pais WHERE capital = null";
+        try (var conexion = DriverManager.getConnection(url, user, pass);
+             var sentencia = conexion.createStatement();
+             var resultado = sentencia.executeQuery(sql)) {
+
+            System.out.println("Paises sin capital:");
+            while (resultado.next()) {
+                System.out.println("- " + resultado.getString("nombre_pais"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void paisPorContinente() {
