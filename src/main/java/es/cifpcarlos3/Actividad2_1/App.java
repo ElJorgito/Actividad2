@@ -61,11 +61,32 @@ public class App {
     }
 
     private static void paisPorContinente() {
-        String sql = "SELECT * FROM paises WHERE continente = ?";
+        try (var conexion = DriverManager.getConnection(url, user, pass);
+             var sentencia = conexion.createStatement();
+             var resultado = sentencia.executeQuery(sql)) {
+
+            System.out.println("Capitales que empiezan por 'San':");
+            while (resultado.next()) {
+                System.out.println("- " + resultado.getString("capital"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void paisesEuropa() {
-        String sql = "SELECT * FROM paises WHERE capital = ?";
+        String sql = "SELECT p.nombre FROM T_PAIS p JOIN T_CONTINENTE c ON p.id_continente = c.id_continente WHERE c.nombre = 'Europa'";
+        try (var conexion = DriverManager.getConnection(url, user, pass);
+             var sentencia = conexion.createStatement();
+             var resultado = sentencia.executeQuery(sql)) {
+
+            System.out.println("Países de Europa:");
+            while (resultado.next()) {
+                System.out.println("- " + resultado.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void listarCapitalesSan() {
