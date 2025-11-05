@@ -51,7 +51,7 @@ public class App {
              var sentencia = conexion.createStatement();
              var resultado = sentencia.executeQuery(sql)) {
 
-            System.out.println("Paises sin capital:");
+            System.out.println("Paises sin capital: ");
             while (resultado.next()) {
                 System.out.println("- " + resultado.getString("nombre_pais"));
             }
@@ -61,14 +61,15 @@ public class App {
     }
 
     private static void paisPorContinente() {
+        String sql = "SELECT c.nombre AS continente, COUNT(p.id_pais) AS num_paises FROM T_CONTINENTE c LEFT JOIN T_PAIS p ON c.id_continente = p.id_continenteGROUP BY c.nombre";
         try (var conexion = DriverManager.getConnection(url, user, pass);
              var sentencia = conexion.createStatement();
              var resultado = sentencia.executeQuery(sql)) {
 
-            System.out.println("Capitales que empiezan por 'San':");
-            while (resultado.next()) {
-                System.out.println("- " + resultado.getString("capital"));
-            }
+           System.out.println("Número de países por continente: ");
+           while (resultado.next()) {
+            System.out.println(resultado.getString("continente") + ": " + resultado.getInt("num_paises"));
+           }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -80,7 +81,7 @@ public class App {
              var sentencia = conexion.createStatement();
              var resultado = sentencia.executeQuery(sql)) {
 
-            System.out.println("Países de Europa:");
+            System.out.println("Países de Europa: ");
             while (resultado.next()) {
                 System.out.println("- " + resultado.getString("nombre"));
             }
@@ -95,7 +96,7 @@ public class App {
              var sentencia = conexion.createStatement();
              var resultado = sentencia.executeQuery(sql)) {
 
-            System.out.println("Capitales que empiezan por 'San':");
+            System.out.println("Capitales que empiezan por 'San': ");
             while (resultado.next()) {
                 System.out.println("- " + resultado.getString("capital"));
             }
