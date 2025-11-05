@@ -61,7 +61,7 @@ public class App {
     }
 
     private static void paisPorContinente() {
-        String sql = "SELECT c.nombre AS continente, COUNT(p.id_pais) AS num_paises FROM T_CONTINENTE c LEFT JOIN T_PAIS p ON c.id_continente = p.id_continenteGROUP BY c.nombre";
+        String sql = "SELECT c.nombre AS continente, COUNT(p.id_pais) AS num_paises FROM T_CONTINENTE c LEFT JOIN T_PAIS p ON c.id_continente = p.id_continente GROUP BY c.nombre";
         try (var conexion = DriverManager.getConnection(url, user, pass);
              var sentencia = conexion.createStatement();
              var resultado = sentencia.executeQuery(sql)) {
