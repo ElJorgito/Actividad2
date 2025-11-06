@@ -61,7 +61,7 @@ public class App {
     }
 
     private static void paisPorContinente() {
-        String sql = "SELECT c.nombre AS continente, COUNT(p.id_pais) AS num_paises FROM T_CONTINENTE c LEFT JOIN T_PAIS p ON c.id_continente = p.id_continente GROUP BY c.nombre";
+        String sql = "SELECT c.nombre_continente AS continente, COUNT(p.identificador) AS num_paises FROM t_continente c LEFT JOIN t_pais p ON c.codigo = p.cod_continente GROUP BY c.nombre_continente";
         try (var conexion = DriverManager.getConnection(url, user, pass);
              var sentencia = conexion.createStatement();
              var resultado = sentencia.executeQuery(sql)) {
@@ -76,14 +76,14 @@ public class App {
     }
 
     private static void paisesEuropa() {
-        String sql = "SELECT p.nombre FROM T_PAIS p JOIN T_CONTINENTE c ON p.id_continente = c.id_continente WHERE c.nombre = 'Europa'";
+        String sql = "SELECT p.nombre_pais FROM t_pais p JOIN t_continente c ON p.cod_continente = c.codigo WHERE c.nombre_continente = 'Europa';";
         try (var conexion = DriverManager.getConnection(url, user, pass);
              var sentencia = conexion.createStatement();
              var resultado = sentencia.executeQuery(sql)) {
 
             System.out.println("Países de Europa: ");
             while (resultado.next()) {
-                System.out.println("- " + resultado.getString("nombre"));
+                System.out.println("- " + resultado.getString("p.nombre_pais"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
