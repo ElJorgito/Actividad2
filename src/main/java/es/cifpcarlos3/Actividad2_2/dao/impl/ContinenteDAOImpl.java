@@ -1,8 +1,6 @@
 package es.cifpcarlos3.Actividad2_2.dao.impl;
 
 import es.cifpcarlos3.Actividad2_2.dao.ContinenteDAO;
-import es.cifpcarlos3.Actividad2_2.model.Continente;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 

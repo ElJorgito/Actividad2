@@ -18,7 +18,7 @@ public class App {
                 System.out.println("1) Listar países sin capital");
                 System.out.println("2) Nº de países por continente");
                 System.out.println("3) Países de Europa");
-                System.out.println("4) Capitales que empiezan por “San”\n");
+                System.out.println("4) Capitales que empiezan por “San”");
                 System.out.println("Opcion: ");
                 opcion = sc.nextInt();
                 switch (opcion) {
