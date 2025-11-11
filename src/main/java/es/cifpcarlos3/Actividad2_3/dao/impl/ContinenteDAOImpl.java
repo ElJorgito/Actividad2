@@ -24,4 +24,16 @@ public class ContinenteDAOImpl implements ContinenteDAO {
         }
     }
 
+    @Override
+    public void eliminarContinente() {
+        String sql = "DELETE FROM t_continente WHERE codigo = 06";
+        try (var conexion = db.getConn();
+             var sentencia = conexion.createStatement();){
+            int filas = sentencia.executeUpdate(sql);
+            System.out.println("Eliminado continente 06. Filas afectadas -> continente:" + filas);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
 }

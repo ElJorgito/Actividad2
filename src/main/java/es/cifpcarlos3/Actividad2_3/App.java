@@ -1,15 +1,17 @@
 package es.cifpcarlos3.Actividad2_3;
 
-import es.cifpcarlos3.Actividad2_2.dao.ContinenteDAO;
-import es.cifpcarlos3.Actividad2_2.dao.PaisDAO;
-import es.cifpcarlos3.Actividad2_2.dao.impl.ContinenteDAOImpl;
-import es.cifpcarlos3.Actividad2_2.dao.impl.PaisDAOImpl;
+import es.cifpcarlos3.Actividad2_3.dao.ContinenteDAO;
+import es.cifpcarlos3.Actividad2_3.dao.PaisDAO;
+import es.cifpcarlos3.Actividad2_3.dao.impl.ContinenteDAOImpl;
+import es.cifpcarlos3.Actividad2_3.dao.impl.PaisDAOImpl;
+import es.cifpcarlos3.Actividad2_3.util.DatabaseConnection;
 
 import java.util.Scanner;
 
 public class App {
-    private static final PaisDAO paisDao = new PaisDAOImpl();
-    private static final ContinenteDAO continenteDao = new ContinenteDAOImpl();
+    private static final DatabaseConnection db = new DatabaseConnection();
+    private static final PaisDAO paisDao = new PaisDAOImpl(db);
+    private static final ContinenteDAO continenteDao = new ContinenteDAOImpl(db);
 
     public static void main(String[] args) {
         Scanner sr = new Scanner(System.in);
@@ -24,8 +26,10 @@ public class App {
             opcion = sr.nextInt();
             switch (opcion) {
                 case 1:
+                    paisDao.listarPaisesSa();
                     break;
                 case 2:
+                    continenteDao.insertarAntartida();
                     break;
                 case 3:
                     break;
