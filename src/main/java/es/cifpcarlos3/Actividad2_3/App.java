@@ -32,8 +32,10 @@ public class App {
                     continenteDao.insertarAntartida();
                     break;
                 case 3:
+                    paisDao.actualizarCapital();
                     break;
                 case 4:
+                    continenteDao.eliminarContinente();
                     break;
                 case 5:
                     System.out.println("Saliendo...");
