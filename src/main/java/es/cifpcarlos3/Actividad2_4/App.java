@@ -1,19 +1,33 @@
 package es.cifpcarlos3.Actividad2_4;
 
+import es.cifpcarlos3.Actividad2_4.dao.ClienteDAO;
+import es.cifpcarlos3.Actividad2_4.dao.impl.ClienteDAOImpl;
+import es.cifpcarlos3.Actividad2_4.util.DatabaseConnection;
+
 import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class App {
-
+    private static final DatabaseConnection db  = new DatabaseConnection();
+    private static final ClienteDAO clienteDAO = new ClienteDAOImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int opcion;
         do {
-            mostrarMenu();
-            opcion = leerInt(sc);
+            System.out.println("\nElige opción:");
+            System.out.println("1) Listar todos los clientes");
+            System.out.println("2) Listar todas las cuentas con su titular");
+            System.out.println("3) Insertar nuevo cliente");
+            System.out.println("4) Insertar nueva cuenta para un cliente");
+            System.out.println("5) Actualizar saldo de una cuenta");
+            System.out.println("6) Transferir saldo entre dos cuenta");
+            System.out.println("7) Eliminar cliente");
+            System.out.println("8) Salir");
+            System.out.print("\nOpción: ");
+            opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    System.out.println("Listar todos los clientes");
+                    clienteDAO.listarClientes();
                     break;
                 case 2:
                     System.out.println("Listar todas las cuentas con su titular");
@@ -41,33 +55,6 @@ public class App {
                     break;
             }
         } while (opcion != 8);
-    }
-
-    private static void mostrarMenu() {
-        System.out.println("\nElige opción:");
-        System.out.println("1) Listar todos los clientes");
-        System.out.println("2) Listar todas las cuentas con su titular");
-        System.out.println("3) Insertar nuevo cliente");
-        System.out.println("4) Insertar nueva cuenta para un cliente");
-        System.out.println("5) Actualizar saldo de una cuenta");
-        System.out.println("6) Transferir saldo entre dos cuenta");
-        System.out.println("7) Eliminar cliente");
-        System.out.println("8) Salir");
-        System.out.print("\nOpción: ");
-    }
-
-    private static int leerInt(Scanner sc) {
-        while (!sc.hasNextInt()) {
-            sc.next();
-        }
-        return sc.nextInt();
-    }
-
-    private static BigDecimal leerBigDecimal(Scanner sc) {
-        while (!sc.hasNextBigDecimal()) {
-            sc.next();
-        }
-        return sc.nextBigDecimal();
     }
 }
 
