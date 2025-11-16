@@ -1,15 +1,16 @@
 package es.cifpcarlos3.Actividad2_4;
 
 import es.cifpcarlos3.Actividad2_4.dao.ClienteDAO;
+import es.cifpcarlos3.Actividad2_4.dao.CuentaDAO;
 import es.cifpcarlos3.Actividad2_4.dao.impl.ClienteDAOImpl;
+import es.cifpcarlos3.Actividad2_4.dao.impl.CuentaDAOImpl;
 import es.cifpcarlos3.Actividad2_4.util.DatabaseConnection;
-
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class App {
     private static final DatabaseConnection db  = new DatabaseConnection();
     private static final ClienteDAO clienteDAO = new ClienteDAOImpl();
+    private static final CuentaDAO cuentaDAO = new CuentaDAOImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -57,4 +58,3 @@ public class App {
         } while (opcion != 8);
     }
 }
-
