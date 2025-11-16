@@ -56,14 +56,14 @@ public class App {
         System.out.print("\nOpción: ");
     }
 
-    public static int leerInt(Scanner sc) {
+    private static int leerInt(Scanner sc) {
         while (!sc.hasNextInt()) {
             sc.next();
         }
         return sc.nextInt();
     }
 
-    public static BigDecimal leerBigDecimal(Scanner sc) {
+    private static BigDecimal leerBigDecimal(Scanner sc) {
         while (!sc.hasNextBigDecimal()) {
             sc.next();
         }
