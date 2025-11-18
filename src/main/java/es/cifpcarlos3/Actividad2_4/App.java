@@ -52,7 +52,11 @@ public class App {
                     System.out.println("Insertar nueva cuenta para un cliente");
                     break;
                 case 5:
-                    System.out.println("Actualizar saldo de una cuenta");
+                    System.out.println("Introduce id de la cuenta: ");
+                    int idcuenta = sc.nextInt();
+                    System.out.println("Introduce el saldo de la cuenta: ");
+                    double saldo = sc.nextDouble();
+                    cuentaDAO.actualizarSaldo(idcuenta, saldo);
                     break;
                 case 6:
                     System.out.println("Transferir saldo entre dos cuentas");

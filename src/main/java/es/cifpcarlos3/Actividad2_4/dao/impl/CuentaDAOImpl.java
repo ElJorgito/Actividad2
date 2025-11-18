@@ -31,4 +31,17 @@ public class CuentaDAOImpl implements CuentaDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public void actualizarSaldo(int idcuenta, double saldo) {
+        //Comprobar si la cuenta existe
+        String sql = "UPDATE t_cuenta SET saldo = ? WHERE id_cuenta = ?";
+        try(var conexion = db.getConn();
+            var sentencia = conexion.createStatement();) {
+            int filas = sentencia.executeUpdate(sql);
+            System.out.println("Saldo actualizado. Filas afectadas: " + filas);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
