@@ -31,7 +31,7 @@ public class App {
                     clienteDAO.listarClientes();
                     break;
                 case 2:
-                    System.out.println("Listar todas las cuentas con su titular");
+                    cuentaDAO.listarCuentas();
                     break;
                 case 3:
                     System.out.println("Insertar nuevo cliente");
