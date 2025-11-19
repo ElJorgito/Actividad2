@@ -123,7 +123,6 @@ public class ClienteDAOImpl implements ClienteDAO {
                     System.out.println("No se puede eliminar: error al comprobar cuentas");
                 }
             }
-
         } catch (SQLException e) {
             System.out.println("ID del cliente a eliminar: " + clienteid);
             System.out.println("No se puede eliminar: error al comprobar existencia");
