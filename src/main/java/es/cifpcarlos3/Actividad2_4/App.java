@@ -62,7 +62,9 @@ public class App {
                     System.out.println("Transferir saldo entre dos cuentas");
                     break;
                 case 7:
-                    System.out.println("Eliminar cliente");
+                    System.out.println("ID del cliente a eliminar: ");
+                    int idcliente = sc.nextInt();
+                    clienteDAO.eliminarCliente(idcliente);
                     break;
                 case 8:
                     System.out.println("Saliendo...");
