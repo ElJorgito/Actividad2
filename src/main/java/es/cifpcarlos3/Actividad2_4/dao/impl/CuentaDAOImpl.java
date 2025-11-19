@@ -31,4 +31,9 @@ public class CuentaDAOImpl implements CuentaDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public void actualizarSaldo(int idcuenta, double saldo) {
+
+    }
 }

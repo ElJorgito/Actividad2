@@ -4,6 +4,7 @@ import es.cifpcarlos3.Actividad2_4.dao.ClienteDAO;
 import es.cifpcarlos3.Actividad2_4.dao.CuentaDAO;
 import es.cifpcarlos3.Actividad2_4.dao.impl.ClienteDAOImpl;
 import es.cifpcarlos3.Actividad2_4.dao.impl.CuentaDAOImpl;
+import es.cifpcarlos3.Actividad2_4.model.Cliente;
 import es.cifpcarlos3.Actividad2_4.util.DatabaseConnection;
 import java.util.Scanner;
 
@@ -34,13 +35,28 @@ public class App {
                     cuentaDAO.listarCuentas();
                     break;
                 case 3:
-                    System.out.println("Insertar nuevo cliente");
+                    System.out.println("Id del cliente: ");
+                    int id = sc.nextInt();
+                    System.out.println("DNI del cliente: ");
+                    String dni = sc.next();
+                    System.out.println("Nombre del cliente: ");
+                    String nombre = sc.next();
+                    System.out.println("TLF del cliente: ");
+                    String tlf = sc.next();
+                    System.out.println("E-mail del cliente: ");
+                    String email = sc.next();
+                    Cliente cliente = new Cliente(id, dni, nombre, tlf, email);
+                    clienteDAO.crearCliente(cliente);
                     break;
                 case 4:
                     System.out.println("Insertar nueva cuenta para un cliente");
                     break;
                 case 5:
-                    System.out.println("Actualizar saldo de una cuenta");
+                    System.out.println("Introduce id de la cuenta: ");
+                    int idcuenta = sc.nextInt();
+                    System.out.println("Introduce el saldo de la cuenta: ");
+                    double saldo = sc.nextDouble();
+                    cuentaDAO.actualizarSaldo(idcuenta, saldo);
                     break;
                 case 6:
                     System.out.println("Transferir saldo entre dos cuentas");
