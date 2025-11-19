@@ -5,6 +5,7 @@ import es.cifpcarlos3.Actividad2_4.dao.CuentaDAO;
 import es.cifpcarlos3.Actividad2_4.dao.impl.ClienteDAOImpl;
 import es.cifpcarlos3.Actividad2_4.dao.impl.CuentaDAOImpl;
 import es.cifpcarlos3.Actividad2_4.model.Cliente;
+import es.cifpcarlos3.Actividad2_4.model.Cuenta;
 import es.cifpcarlos3.Actividad2_4.util.DatabaseConnection;
 import java.util.Scanner;
 
@@ -49,20 +50,31 @@ public class App {
                     clienteDAO.crearCliente(cliente);
                     break;
                 case 4:
-                    System.out.println("Insertar nueva cuenta para un cliente");
+                    System.out.print("ID de la cuenta: ");
+                    int idCuenta = Integer.parseInt(sc.nextLine());
+                    System.out.print("Número de cuenta: ");
+                    String numeroCuenta = sc.nextLine();
+                    System.out.print("ID del cliente al que pertenece: ");
+                    int idCliente = Integer.parseInt(sc.nextLine());
+                    System.out.print("Saldo inicial: ");
+                    double saldo = sc.nextDouble();
+                    Cuenta cuenta = new Cuenta(idCuenta, numeroCuenta, idCliente, saldo);
+
                     break;
                 case 5:
                     System.out.println("Introduce id de la cuenta: ");
                     int idcuenta = sc.nextInt();
                     System.out.println("Introduce el saldo de la cuenta: ");
-                    double saldo = sc.nextDouble();
-                    cuentaDAO.actualizarSaldo(idcuenta, saldo);
+                    double saldonuevo = sc.nextDouble();
+                    cuentaDAO.actualizarSaldo(idcuenta, saldonuevo);
                     break;
                 case 6:
                     System.out.println("Transferir saldo entre dos cuentas");
                     break;
                 case 7:
-                    System.out.println("Eliminar cliente");
+                    System.out.println("Id del cliente a eliminar: ");
+                    int clienteid = sc.nextInt();
+                    clienteDAO.eliminarCliente(clienteid);
                     break;
                 case 8:
                     System.out.println("Saliendo...");

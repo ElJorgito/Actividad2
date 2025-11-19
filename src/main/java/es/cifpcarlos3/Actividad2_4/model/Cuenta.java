@@ -13,7 +13,7 @@ public class Cuenta {
     private int idCuenta;
     private String numeroCuenta;
     private int idCliente;
-    private BigDecimal saldo;
+    private double saldo;
 
     @Override
     public String toString() {return "Cuenta: idCuenta: " + idCuenta

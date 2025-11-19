@@ -78,4 +78,47 @@ public class ClienteDAOImpl implements ClienteDAO {
         }
     }
 
+    @Override
+    public void eliminarCliente(int clienteid) {
+        String sqlExiste = "SELECT * FROM t_cliente WHERE id_cliente = ?";
+        try (var conexion = db.getConn();
+             var sentencia = conexion.prepareStatement(sqlExiste);){
+            sentencia.setInt(1, clienteid);
+            var resultado = sentencia.executeQuery();
+
+            if (!resultado.next()) {
+                System.out.println("Este cliente no existe en la base de datos");
+            }else{
+                String sqlCuenta = "SELECT COUNT(*) FROM t_cuenta WHERE id_cliente = ?";
+                try (var conexion2 = db.getConn();
+                     var sentencia2 = conexion2.prepareStatement(sqlCuenta);){
+                    sentencia2.setInt(1, clienteid);
+                    var resultado2 = sentencia2.executeQuery();
+                    resultado2.next();
+
+                    if (resultado2.getInt(1) > 0) {
+                        System.out.println("ERROR: Este cliente tiene cuentas asociadas y no puede eliminarse.");
+                    } else {
+                        String sql = "DELETE FROM t_cliente WHERE id_cliente = ?";
+                        try (var conexion3 = db.getConn();
+                             var sentencia3 = conexion3.prepareStatement(sql)) {
+                            sentencia3.setInt(1, clienteid);
+
+                            int filas = sentencia3.executeUpdate();
+                            System.out.println("ID del cliente a eliminar: " + clienteid);
+                            System.out.println("Cliente eliminado. Filas afectadas: " + filas);
+                        } catch (SQLException e) {
+                            System.out.println("No se pudo eliminar el cliente: " + e.getMessage());
+                        }
+                    }
+                } catch (SQLException e) {
+                    System.out.println("ID del cliente a eliminar: " + clienteid);
+                    System.out.println("No se puede eliminar: el cliente tiene cuentas asociadas");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("ID del cliente a eliminar: " + clienteid);
+            System.out.println("No se puede eliminar: el cliente no existe");
+        }
+    }
 }
