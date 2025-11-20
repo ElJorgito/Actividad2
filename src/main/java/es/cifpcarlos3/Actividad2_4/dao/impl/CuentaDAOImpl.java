@@ -3,6 +3,9 @@ package es.cifpcarlos3.Actividad2_4.dao.impl;
 import es.cifpcarlos3.Actividad2_4.dao.CuentaDAO;
 import es.cifpcarlos3.Actividad2_4.model.Cuenta;
 import es.cifpcarlos3.Actividad2_4.util.DatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class CuentaDAOImpl implements CuentaDAO {
@@ -127,6 +130,61 @@ public class CuentaDAOImpl implements CuentaDAO {
 
     @Override
     public void transferencia(int cOrigen, int cDestino, double importe) {
-        String sqlSaldo = "";
+        try(var conexion = db.getConn();){
+
+            conexion.setAutoCommit(false);
+
+            String sqlSaldo = "SELECT saldo FROM t_cuenta WHERE id_cuenta = ?";
+            try(var sentencia =  conexion.prepareStatement(sqlSaldo)){
+                sentencia.setDouble(1, importe);
+                var resultado = sentencia.executeQuery();
+                if (!resultado.next()) {
+                    System.out.println("Transferencia NO realizada (saldo insuficiente o cuenta inexistente)");
+                    conexion.rollback();
+                    conexion.setAutoCommit(true);
+                    return;
+                }
+            } catch (SQLException e) {
+                System.out.println("Transferencia NO realizada (saldo insuficiente o cuenta inexistente");
+                conexion.rollback();
+                conexion.setAutoCommit(true);
+                return;
+            }
+
+            String sqlExisteDestino = "SELECT id_cuenta FROM t_cuenta WHERE id_cuenta = ?";
+            try (var sentencia2 = conexion.prepareStatement(sqlExisteDestino)) {
+
+                sentencia2.setInt(1, cDestino);
+                var resultado2 = sentencia2.executeQuery();
+
+                if (!resultado2.next()) {
+                    System.out.println("Transferencia NO realizada (saldo insuficiente o cuenta inexistente)");
+                    conexion.rollback();
+                    conexion.setAutoCommit(true);
+                    return;
+                }
+            } catch (SQLException e) {
+                System.out.println("Transferencia NO realizada (saldo insuficiente o cuenta inexistente)");
+                conexion.rollback();
+                conexion.setAutoCommit(true);
+                return;
+            }
+
+            String sqlOrigen = "UPDATE t_cuenta SET saldo = saldo - ? WHERE id_cuenta = ?";
+            try (var sentencia3 = conexion.prepareStatement(sqlExisteDestino)) {
+                sentencia3.setDouble(1, importe);
+                sentencia3.setInt(2, cOrigen);
+                int filas = sentencia3.executeUpdate();
+
+            } catch (SQLException e) {
+                System.out.println("Transferencia NO realizada (saldo insuficiente o cuenta inexistente)");
+                conexion.rollback();
+                conexion.setAutoCommit(true);
+                return;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
