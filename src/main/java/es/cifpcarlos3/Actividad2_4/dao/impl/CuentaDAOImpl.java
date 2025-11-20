@@ -99,17 +99,26 @@ public class CuentaDAOImpl implements CuentaDAO {
                             sentencia3.setDouble(4, cuenta.getSaldo());
 
                             int filas = sentencia3.executeUpdate();
+                            System.out.println("ID del cliente: " + cuenta.getIdCliente());
+                            System.out.println("Numero de la cuenta: " + cuenta.getNumeroCuenta());
+                            System.out.println("Saldo inicial: " + cuenta.getSaldo());
                             System.out.println("Cuenta insertada correctamente. Filas afectadas: " + filas);
                         } catch (SQLException e) {
                             System.out.println("Error al insertar la cuenta: " + e.getMessage());
                         }
                     }
                 } catch (SQLException e) {
-                    System.out.println("No se pudo comprobar si existe la cuenta: " + e.getMessage());
+                    System.out.println("ID del cliente: " + cuenta.getIdCliente());
+                    System.out.println("Numero de la cuenta: " + cuenta.getNumeroCuenta());
+                    System.out.println("Saldo inicial: " + cuenta.getSaldo());
+                    System.out.println("Error: la cuenta con ID " + cuenta.getIdCuenta() + " ya existe. No se creó la cuenta.");
                 }
             }
         } catch (SQLException e) {
-            System.out.println("No se pudo comprobar si existe el cliente: " + e.getMessage());
+            System.out.println("ID del cliente: " + cuenta.getIdCliente());
+            System.out.println("Numero de la cuenta: " + cuenta.getNumeroCuenta());
+            System.out.println("Saldo inicial: " + cuenta.getSaldo());
+            System.out.println("Error: el cliente " + cuenta.getIdCliente() + " no existe. No se creó la cuenta.");
         }
     }
 }
