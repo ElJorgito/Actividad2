@@ -52,11 +52,11 @@ public class App {
                 case 4:
                     System.out.println("ID de la cuenta: ");
                     int idCuenta = sc.nextInt();
-                    System.out.print("Número de cuenta: ");
-                    String numeroCuenta = sc.nextLine();
-                    System.out.print("ID del cliente: ");
+                    System.out.println("Número de cuenta: ");
+                    String numeroCuenta = sc.next();
+                    System.out.println("ID del cliente: ");
                     int idCliente = sc.nextInt();
-                    System.out.print("Saldo inicial: ");
+                    System.out.println("Saldo inicial: ");
                     double saldoinicial = sc.nextDouble();
                     Cuenta cuenta = new Cuenta(idCuenta, numeroCuenta, idCliente, saldoinicial);
                     cuentaDAO.insertarCuenta(cuenta);
@@ -69,7 +69,13 @@ public class App {
                     cuentaDAO.actualizarSaldo(idcuenta, saldo);
                     break;
                 case 6:
-                    System.out.println("Transferir saldo entre dos cuentas");
+                    System.out.println("Cuenta origen (id): ");
+                    int cOrigen = sc.nextInt();
+                    System.out.println("Cuenta destino (id): ");
+                    int cDestino = sc.nextInt();
+                    System.out.println("Importe: ");
+                    double importe = sc.nextDouble();
+                    cuentaDAO.transferencia(cOrigen, cDestino, importe);
                     break;
                 case 7:
                     System.out.println("ID del cliente a eliminar: ");

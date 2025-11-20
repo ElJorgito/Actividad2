@@ -104,6 +104,9 @@ public class CuentaDAOImpl implements CuentaDAO {
                             System.out.println("Saldo inicial: " + cuenta.getSaldo());
                             System.out.println("Cuenta insertada correctamente. Filas afectadas: " + filas);
                         } catch (SQLException e) {
+                            System.out.println("ID del cliente: " + cuenta.getIdCliente());
+                            System.out.println("Numero de la cuenta: " + cuenta.getNumeroCuenta());
+                            System.out.println("Saldo inicial: " + cuenta.getSaldo());
                             System.out.println("Error al insertar la cuenta: " + e.getMessage());
                         }
                     }
@@ -120,5 +123,10 @@ public class CuentaDAOImpl implements CuentaDAO {
             System.out.println("Saldo inicial: " + cuenta.getSaldo());
             System.out.println("Error: el cliente " + cuenta.getIdCliente() + " no existe. No se creó la cuenta.");
         }
+    }
+
+    @Override
+    public void transferencia(int cOrigen, int cDestino, double importe) {
+        String sqlSaldo = "";
     }
 }

@@ -6,4 +6,5 @@ public interface CuentaDAO {
     void listarCuentas();
     void actualizarSaldo(int idcuenta, double saldo);
     void insertarCuenta(Cuenta cuenta);
+    void transferencia(int cOrigen, int cDestino, double importe);
 }
