@@ -5,6 +5,7 @@ import es.cifpcarlos3.Actividad2_4.dao.CuentaDAO;
 import es.cifpcarlos3.Actividad2_4.dao.impl.ClienteDAOImpl;
 import es.cifpcarlos3.Actividad2_4.dao.impl.CuentaDAOImpl;
 import es.cifpcarlos3.Actividad2_4.model.Cliente;
+import es.cifpcarlos3.Actividad2_4.model.Cuenta;
 import es.cifpcarlos3.Actividad2_4.util.DatabaseConnection;
 import java.util.Scanner;
 
@@ -49,7 +50,16 @@ public class App {
                     clienteDAO.crearCliente(cliente);
                     break;
                 case 4:
-                    System.out.println("Insertar nueva cuenta para un cliente");
+                    System.out.println("ID de la cuenta: ");
+                    int idCuenta = sc.nextInt();
+                    System.out.print("Número de cuenta: ");
+                    String numeroCuenta = sc.nextLine();
+                    System.out.print("ID del cliente: ");
+                    int idCliente = sc.nextInt();
+                    System.out.print("Saldo inicial: ");
+                    double saldoinicial = sc.nextDouble();
+                    Cuenta cuenta = new Cuenta(idCuenta, numeroCuenta, idCliente, saldoinicial);
+                    cuentaDAO.insertarCuenta(cuenta);
                     break;
                 case 5:
                     System.out.println("Introduce id de la cuenta: ");

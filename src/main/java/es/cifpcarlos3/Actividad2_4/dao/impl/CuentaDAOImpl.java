@@ -1,8 +1,8 @@
 package es.cifpcarlos3.Actividad2_4.dao.impl;
 
 import es.cifpcarlos3.Actividad2_4.dao.CuentaDAO;
+import es.cifpcarlos3.Actividad2_4.model.Cuenta;
 import es.cifpcarlos3.Actividad2_4.util.DatabaseConnection;
-
 import java.sql.SQLException;
 
 public class CuentaDAOImpl implements CuentaDAO {
@@ -64,6 +64,52 @@ public class CuentaDAOImpl implements CuentaDAO {
             System.out.println("ID de la cuenta: " + idcuenta);
             System.out.println("Saldo de la cuenta: " + saldo);
             System.out.println("No se actualizo ninguna cuenta id no encontrado");
+        }
+    }
+
+    @Override
+    public void insertarCuenta(Cuenta cuenta) {
+        String sqlCliente = "SELECT id_cliente FROM t_cliente WHERE id_cliente = ?";
+        try (var conexion = db.getConn();
+             var sentencia = conexion.prepareStatement(sqlCliente)) {
+
+            sentencia.setInt(1, cuenta.getIdCliente());
+            var resultado = sentencia.executeQuery();
+
+            if (!resultado.next()) {
+                System.out.println("Error: el cliente " + cuenta.getIdCliente() + " no existe. No se creó la cuenta.");
+            } else {
+                String sqlExiste = "SELECT id_cuenta FROM t_cuenta WHERE id_cuenta = ?";
+
+                try (var conexion2 = db.getConn();
+                     var sentencia2 = conexion2.prepareStatement(sqlExiste)) {
+                    sentencia2.setInt(1, cuenta.getIdCuenta());
+                    var resultado2 = sentencia2.executeQuery();
+
+                    if (resultado2.next()) {
+                        System.out.println("Error: la cuenta con ID " + cuenta.getIdCuenta() + " ya existe. No se creó la cuenta.");
+                    } else {
+                        String sqlInsert = "INSERT INTO t_cuenta(id_cuenta, numero_cuenta, id_cliente, saldo) VALUES (?, ?, ?, ?)";
+
+                        try (var conexion3 = db.getConn();
+                             var sentencia3 = conexion3.prepareStatement(sqlInsert)) {
+                            sentencia3.setInt(1, cuenta.getIdCuenta());
+                            sentencia3.setString(2, cuenta.getNumeroCuenta());
+                            sentencia3.setInt(3, cuenta.getIdCliente());
+                            sentencia3.setDouble(4, cuenta.getSaldo());
+
+                            int filas = sentencia3.executeUpdate();
+                            System.out.println("Cuenta insertada correctamente. Filas afectadas: " + filas);
+                        } catch (SQLException e) {
+                            System.out.println("Error al insertar la cuenta: " + e.getMessage());
+                        }
+                    }
+                } catch (SQLException e) {
+                    System.out.println("No se pudo comprobar si existe la cuenta: " + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudo comprobar si existe el cliente: " + e.getMessage());
         }
     }
 }
