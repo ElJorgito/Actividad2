@@ -1,13 +1,16 @@
 package es.cifpcarlos3.Actividad2_5;
 
 import es.cifpcarlos3.Actividad2_5.dao.CuentaDAO;
+import es.cifpcarlos3.Actividad2_5.dao.UsuarioDAO;
 import es.cifpcarlos3.Actividad2_5.dao.impl.CuentaDAOImpl;
+import es.cifpcarlos3.Actividad2_5.dao.impl.UsuarioDAOImpl;
 import es.cifpcarlos3.Actividad2_5.util.DatabaseConnection;
 import java.util.Scanner;
 
 public class App {
     private static final DatabaseConnection db  = new DatabaseConnection();
     private static final CuentaDAO cuentaDAO = new CuentaDAOImpl();
+    private static final UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -23,6 +26,7 @@ public class App {
             opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
+                    usuarioDAO.crearTablaUsuarios();
                     break;
                 case 2:
                     break;
@@ -49,6 +53,6 @@ public class App {
                     System.out.println("Opcion invalida");
                     break;
             }
-        } while (opcion != 8);
+        } while (opcion != 6);
     }
 }

@@ -2,7 +2,6 @@ package es.cifpcarlos3.Actividad2_5.dao.impl;
 
 import es.cifpcarlos3.Actividad2_5.dao.CuentaDAO;
 import es.cifpcarlos3.Actividad2_5.util.DatabaseConnection;
-
 import java.sql.SQLException;
 
 public class CuentaDAOImpl implements CuentaDAO {
