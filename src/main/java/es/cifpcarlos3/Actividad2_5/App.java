@@ -1,11 +1,13 @@
 package es.cifpcarlos3.Actividad2_5;
 
+import es.cifpcarlos3.Actividad2_5.dao.CuentaDAO;
+import es.cifpcarlos3.Actividad2_5.dao.impl.CuentaDAOImpl;
 import es.cifpcarlos3.Actividad2_5.util.DatabaseConnection;
 import java.util.Scanner;
 
 public class App {
     private static final DatabaseConnection db  = new DatabaseConnection();
-
+    private static final CuentaDAO cuentaDAO = new CuentaDAOImpl();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -25,8 +27,18 @@ public class App {
                 case 2:
                     break;
                 case 3:
+                    System.out.println("DNI: ");
+                    String Dni = sc.next();
+                    System.out.println("Password: ");
+                    String Password = sc.next();
+                    cuentaDAO.listarCuentasSeguro(Dni, Password);
                     break;
                 case 4:
+                    System.out.println("DNI: ");
+                    String dni = sc.next();
+                    System.out.println("Password: ");
+                    String password = sc.next();
+                    cuentaDAO.listarCuentasInseguro(dni, password);
                     break;
                 case 5:
                     break;
