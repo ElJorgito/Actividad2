@@ -29,6 +29,7 @@ public class App {
                     usuarioDAO.crearTablaUsuarios();
                     break;
                 case 2:
+                    usuarioDAO.importarUsuarios();
                     break;
                 case 3:
                     System.out.println("DNI: ");

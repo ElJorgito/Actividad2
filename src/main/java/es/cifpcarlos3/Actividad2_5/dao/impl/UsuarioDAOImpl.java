@@ -25,4 +25,51 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             System.out.println(e.getMessage());
         }
     }
+    @Override
+    public void importarUsuarios() {
+
+        String sqlClientes = "SELECT dni FROM T_CLIENTE";
+        String sqlCheck = "SELECT dni FROM T_USUARIO WHERE dni = ?";
+        String sqlInsert = "INSERT INTO T_USUARIO(dni, password) VALUES (?, ?)";
+
+        int importados = 0;
+
+        try (var conexion = db.getConn();
+             var sentenciaClientes = conexion.prepareStatement(sqlClientes);
+             var resultadoClientes = sentenciaClientes.executeQuery()) {
+
+            while (resultadoClientes.next()) {
+                String dni = resultadoClientes.getString("dni");
+
+                try (var conexion2 = db.getConn();
+                     var sentenciaCheck = conexion2.prepareStatement(sqlCheck)) {
+                    sentenciaCheck.setString(1, dni);
+                    var resultadoCheck = sentenciaCheck.executeQuery();
+
+                    if (!resultadoCheck.next()) {
+                        try (var conexion3 = db.getConn();
+                             var sentenciaInsert = conexion3.prepareStatement(sqlInsert)) {
+                            sentenciaInsert.setString(1, dni);
+                            sentenciaInsert.setString(2, "1234");
+
+                            int filas = sentenciaInsert.executeUpdate();
+                            if (filas == 1) {
+                                importados++;
+                            }
+                        } catch (SQLException e) {
+                            System.out.println("No se pudo insertar usuario:");
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                } catch (SQLException e) {
+                    System.out.println("No se pudo comprobar existencia:");
+                    System.out.println(e.getMessage());
+                }
+            }
+            System.out.println("Se han importado" + importados + "usuarios nuevos a T_USUARIO");
+        } catch (SQLException e) {
+            System.out.println("No se pudo obtener la lista de clientes:");
+            System.out.println(e.getMessage());
+        }
+    }
 }
