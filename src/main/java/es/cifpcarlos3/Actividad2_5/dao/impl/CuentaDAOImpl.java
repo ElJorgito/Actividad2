@@ -38,32 +38,32 @@ public class CuentaDAOImpl implements CuentaDAO {
     }
 
     @Override
-    public void listarCuentasSeguro(String dni, String password) {
-        String sql = "SELECT c.id_cuenta, c.numero_cuenta, c.saldo" +
-                "FROM T_CUENTA c" +
-                "JOIN T_CLIENTE cli ON c.id_cliente = cli.id_cliente" +
-                "JOIN T_USUARIO u ON u.dni = cli.dni";
+    public void listarCuentasSeguro(String dniCuenta, String password) {
+        String sql = "SELECT c.id_cuenta, c.numero_cuenta, c.saldo, cli.dni " +
+                "FROM T_CUENTA c " +
+                "JOIN T_CLIENTE cli ON c.id_cliente = cli.id_cliente " +
+                "JOIN T_USUARIO u ON u.dni = cli.dni " +
+                "WHERE u.dni = ? AND u.password = ?; ";
 
         try (var conexion = db.getConn();
              var sentencia = conexion.prepareStatement(sql)) {
-            sentencia.setString(1, dni);
+            sentencia.setString(1, dniCuenta);
             sentencia.setString(2, password);
 
-            try (var resultado = sentencia.executeQuery()) {
-                System.out.printf("%-4s %-10s %-20s %-10s%n",
-                        "ID", "DNI", "Nº CUENTA", "SALDO");
-                System.out.println("---- ---------- -------------------- ----------");
-                int cont = 0;
-                while (resultado.next()) {
-                    System.out.printf("%-4d %-10s %-20s %-10.2f%n",
-                            resultado.getInt("id_cuenta"),
-                            resultado.getString("dni"),
-                            resultado.getString("numero_cuenta"),
-                            resultado.getDouble("saldo"));
-                    cont++;
-                }
-                System.out.println("(" + cont + " cuentas)");
+            var resultado = sentencia.executeQuery();
+            System.out.printf("%-4s %-10s %-20s %-10s%n",
+                    "ID", "DNI", "Nº CUENTA", "SALDO");
+            System.out.println("---- ---------- -------------------- ----------");
+            int cont = 0;
+            while (resultado.next()) {
+                System.out.printf("%-4d %-10s %-20s %-10.2f%n",
+                        resultado.getInt("id_cuenta"),
+                        resultado.getString("dni"),
+                        resultado.getString("numero_cuenta"),
+                        resultado.getDouble("saldo"));
+                cont++;
             }
+            System.out.println("(" + cont + " cuentas)");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -71,10 +71,10 @@ public class CuentaDAOImpl implements CuentaDAO {
 
     @Override
     public void eliminarCuentaUsuario(String dniDelete, String pass, int idCuenta) {
-        String sql = "DELETE c" +
-                     "FROM T_CUENTA c" +
-                     "JOIN T_CLIENTE cli ON c.id_cliente = cli.id_cliente" +
-                     "JOIN T_USUARIO u ON u.dni = cli.dni" +
+        String sql = "DELETE c " +
+                     "FROM T_CUENTA c " +
+                     "JOIN T_CLIENTE cli ON c.id_cliente = cli.id_cliente " +
+                     "JOIN T_USUARIO u ON u.dni = cli.dni " +
                      "WHERE u.dni = ? AND u.password = ? AND c.id_cuenta = ?;";
         try (var conexion = db.getConn();
              var sentencia = conexion.prepareStatement(sql)) {
