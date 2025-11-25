@@ -68,4 +68,28 @@ public class CuentaDAOImpl implements CuentaDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public void eliminarCuentaUsuario(String dniDelete, String pass, int idCuenta) {
+        String sql = "DELETE c" +
+                     "FROM T_CUENTA c" +
+                     "JOIN T_CLIENTE cli ON c.id_cliente = cli.id_cliente" +
+                     "JOIN T_USUARIO u ON u.dni = cli.dni" +
+                     "WHERE u.dni = ? AND u.password = ? AND c.id_cuenta = ?;";
+        try (var conexion = db.getConn();
+             var sentencia = conexion.prepareStatement(sql)) {
+            sentencia.setString(1, dniDelete);
+            sentencia.setString(2, pass);
+            sentencia.setInt(3, idCuenta);
+
+            int filas = sentencia.executeUpdate();
+            System.out.println("DNI: " + dniDelete);
+            System.out.println("ID Cuenta: " + idCuenta);
+            System.out.println("Cuenta eliminada correctamente. Filas afectadas: " +  filas);
+
+        } catch (SQLException e) {
+            System.out.println("No se eliminó ninguna cuenta (credenciales incorrectas o cuenta no pertenece a ese usuario)");
+            System.out.println(e.getMessage());
+        }
+    }
 }

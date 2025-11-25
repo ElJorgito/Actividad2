@@ -45,6 +45,13 @@ public class App {
                     cuentaDAO.listarCuentasInseguro(dni, password);
                     break;
                 case 5:
+                    System.out.print("DNI: ");
+                    String dniDelete = sc.nextLine();
+                    System.out.print("Password: ");
+                    String pass = sc.nextLine();
+                    System.out.print("ID de la cuenta a eliminar: ");
+                    int idCuenta = sc.nextInt();
+                    cuentaDAO.eliminarCuentaUsuario(dniDelete, pass, idCuenta);
                     break;
                 case 6:
                     System.out.println("Saliendo...");
